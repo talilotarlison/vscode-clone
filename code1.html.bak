@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/ace.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/ext-beautify.js"></script>
+    <style>
+        body {
+            background-color: black;
+        }
+		
+        #editor {
+		  position: relative;
+		  width: 100%;
+		  height: 600px;
+		}
+
+		#exportar { 
+		border: solid red 20px;
+		position:absolute;
+		width: 800px;
+		height: 600px;
+		top: 100px;
+		right: 170px;
+		background-color: gray;
+		
+		}
+		#exportar > textarea {
+		width: 800px;
+		height: 500px;
+		}
+		textarea{
+		border: 0 none;
+		outline: 0;
+		box-shadow:0;
+		
+		}
+		textarea::placeholder{
+		color:red;
+		
+		}
+		#fecha_exportar {
+		display:none}
+		
+    </style>
+</head>
+<body>
+    <div> 
+        <ul>
+            <li>salvart</li
+            <li><button id="salvar_exporte">salvar exporte</button></li>
+            <li>sakvar</li>
+        </ul>
+    <div id="editor">
+    
+    </div>
+      <a href="../">Voltar</a>
+      <button id="formatar">Formatar</button>
+      <button id="button">salvar</button>
+	  
+	  <div id="fecha_exportar">
+	  <p>Exportar codigo</p>
+	  <button id="xxx">fecha</button>
+	  <textarea id="textarea" tipy="textarea"></textarea>
+	  <button id="salvar_final">Salvar</button>
+	  </div>
+</body>
+<script>
+//https://pt.stackoverflow.com/questions/418443/textarea-semelhante-a-um-editor-de-texto-ex-  
+//editor de texto vscodec
+
+var editor = ace.edit("editor");
+
+    document.getElementById('editor').style.fontSize = '16px';
+   
+    editor.setTheme("ace/theme/dracula")
+	
+    
+    editor.session.setMode("ace/mode/javascript");
+    
+    editor.session.setTabSize(4);
+    
+    editor.setOptions({
+      autoScrollEditorIntoView: true,
+      copyWithEmptySelection: true,
+    });
+    
+    setTimeout(() => {
+      var beautify = ace.require("ace/ext/beautify"); // get reference to extension
+      beautify.beautify(editor.session);
+    }, 500);
+    
+    //beautify.beautify(editor.session);
+    document.getElementById("formatar").onclick = function() {
+      var beautify = ace.require("ace/ext/beautify"); // get reference to extension
+      beautify.beautify(editor.session);
+	  
+    }
+	
+	  //salve arquivo
+	   function download(content, fileName, contentType) {
+          var a = document.createElement("a");
+          var file = new Blob([content], {type: contentType});
+          a.href = URL.createObjectURL(file);
+          a.download = fileName;
+          a.click();
+        }
+	var textarea = document.getElementById("textarea");;
+    var button = document.getElementById("salvar_final");
+ 
+    button.addEventListener("click", function() {
+      if( confirm("deseja salvar?")){
+      var content =  textarea.value;
+      var fileName = "arquivo.html";
+      var contentType = "text/plain";
+      download(content, fileName, contentType);
+    }else{alert("cancelado")}
+    });
+
+
+	var buttonFecha = document.getElementById("xxx");
+	
+	
+	buttonFecha.addEventListener("click", function(){
+	console.log("cluclou");
+	var telaExporte = document.getElementById("exportar");
+	telaExporte.setAttribute("id", "fecha_exportar");
+	
+	})
+	
+	var buttonSalvaEx = document.getElementById("salvar_exporte");
+	
+	buttonSalvaEx.addEventListener("click", function(){
+	console.log("cluclou");
+	var telaSalvaExporte = document.getElementById("fecha_exportar");
+	telaSalvaExporte.setAttribute("id", "exportar");
+	
+	})
+ 
+    
+	</script>
+</html>
